@@ -36,7 +36,7 @@ I have implemented some standard models, such as Model A, Model B and Model H of
 ### Why finite differences is delicate and we need to use a semi implicit scheme
 To understand why these kind of equations are stiff and hard to integrate, let's consider the same equation in Fourier space.
 $$ 
-\partial _t \hat  \varphi(k,t) = -( r + \Gamma k^2)\hat \varphi(k,t) + \mathcal F [ \varphi^3(x)](k,t) +\hat \xi(k,t) 
+\partial _t \hat  \varphi(k,t) = -( r + \Gamma k^2)\hat \varphi(k,t) + \mathcal {F} [ \varphi^3(x)](k,t) +\hat \xi(k,t) 
 $$
 Where in a discrete system, the momentum $k$ assumes only discrete in the interval $k \in [ -\frac \pi {\Delta x}, \frac \pi {\Delta x}$ ]. 
 
