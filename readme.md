@@ -36,20 +36,20 @@ I have implemented some standard models, such as Model A, Model B and Model H of
 ### Why finite differences is delicate and we need to use a semi implicit scheme
 To understand why these kind of equations are stiff and hard to integrate, let's consider the same equation in Fourier space.
 $$ 
-\partial _t \hat  \varphi(k,t) = -( r + \Gamma k^2)\hat \varphi(k,t) + \mathcal {F} [ \varphi^3(x)](k,t) +\hat \xi(k,t) 
+\partial _t \hat  \varphi(k,t) = -( r + \Gamma k^2)\hat \varphi(k,t)  +\hat \xi(k,t) 
 $$
-Where in a discrete system, the momentum $k$ assumes only discrete in the interval $k \in [ -\frac \pi {\Delta x}, \frac \pi {\Delta x}$ ]. 
+Where in a discrete system, the momentum $k$ assumes only discrete in the interval $k \in ( -\frac \pi {\Delta x}, \frac \pi {\Delta x})$. 
 
 If we naively simulate this equation by discretizing time we would get, 
 $$
-\hat \varphi(k, t+\Delta _t) = \hat \varphi(k,t) - ( r + \Gamma k^2)\hat \varphi(k,t) \Delta t \ + \mathcal F [ \varphi^3(x)](k,t) \Delta t \ +  \ \sqrt{ 2 T \Gamma \Delta t} \eta(k, t)  
+\hat \varphi(k, t+\Delta t) = \hat \varphi(k,t) - ( r + \Gamma k^2)\hat \varphi(k,t) \Delta t +  \ \sqrt{ 2 T \Gamma \Delta t} \eta(k, t)  
 $$
 
 This equation seems harmless, but it is not. In order for the integration to succeed we need $\Delta t \ll k_{\rm max}^{-2}  \simeq L^{-2}$. 
 
 We can solve this problem by considering a partially implicit integration scheme. We consider integrate the  $\Gamma k^2$ term in the equation of motion implicitly by using a partially backward integration scheme: 
 $$
-\hat \varphi(k, t+\Delta _t) = \hat \varphi(k,t) - r \hat \varphi(k,t) \Delta t + \Gamma k^2 \hat \varphi(k,t+\Delta t)\Delta t \ + \mathcal F [ \varphi^3(x)](k,t)\Delta t \ +  \ \sqrt{ 2 T \Gamma \Delta t} \eta(k, t)  
+\hat \varphi(k, t+\Delta _t) = \hat \varphi(k,t) - r \hat \varphi(k,t) \Delta t + \Gamma k^2 \hat \varphi(k,t+\Delta t)\Delta t \ +  \ \sqrt{ 2 T \Gamma \Delta t} \eta(k, t)  
 $$
 Crucially now the $k^2$ term is computed at the next time step, leading to the following update equation. 
 $$
@@ -61,11 +61,11 @@ Using this implicit explicit scheme the stiff term $\Gamma k^2$ is know in the d
 ### De - aliasing 
 We work in with the Fourier transformed field $\hat \varphi(k,t)$, so that we can integrate the Laplacian term using a semi-implicit scheme. In this representation, non-linear terms such as $\varphi^3(x,t)$  are computed as convolutions,
 $$
-\mathcal F [ \varphi^3(x,t)]= \int   \varphi(q,t) \hat \varphi(p,t) \hat \varphi(k-p-q,t)\ dq  \ dp
+\mathcal F ( \varphi^3(x,t))= \int   \varphi(q,t) \hat \varphi(p,t) \hat \varphi(k-p-q,t)\ dq  \ dp
 $$ 
 which are computationally expensive. To avoid this, we compute the non linear terms in real space: 
 $$
- \mathcal F [ \varphi^3(x,t)]= \mathcal F[ \mathcal F^{-1}[ \hat \varphi]^3 ]
+ \mathcal F ( \varphi^3(x,t))= \mathcal F[ \mathcal F^{-1}(\hat \varphi]^3 )
 $$
 
 
@@ -76,7 +76,7 @@ $$
 
 When we compute the non-linear terms, such as $\varphi(x,t)^2$ going in real space we are automatically considering all the possible pairs of moments, 
 $$
-\mathcal F[\varphi^2] = \sum_k \sum_q e^{i ( k+q) x } \hat \varphi(k,t) \hat \varphi(q,t)
+\mathcal F(\varphi^2) = \sum_k \sum_q e^{i ( k+q) x } \hat \varphi(k,t) \hat \varphi(q,t)
 $$
 In this way we are considering pairs of moments that sums up to more than $2 \pi / 2 \Delta x $.
 
