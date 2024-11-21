@@ -7,15 +7,15 @@ The code is written using the jax-library [https://jax.readthedocs.io/en/latest/
  
 
 
-#### Fully differentiable
+<h3 style="color:#81C784;">Fully differentiable</h3>
 Being written in jax the simulation routine is end-to-end differentiable. This means that we can easily take derivative of the results of the simulation with respect to the parameters or with respect to the initial condition. This can be done by just using the jax build-in auto-grad function jax.grad. (this can be quite memory intensive depending on the details of the simulation)
 
-#### Vmap support:
+<h3 style="color:#81C784;">Vmap support</h3>
 
 The code base supports the jax.vmap function, meaning that the simulate method can be vectorizes. This can be used to run many simulations with different random seeds or different parameters. (but this can me memory intensive)
 
-#### What kind of systems does this code simulate
-
+<h3 style="color:#81C784;">What kind of systems does this code simulate
+</h3>
 
 The code is meant to integrate equations such as model A of critical dynamics [1]
 
@@ -32,8 +32,8 @@ You will find a very simple LatticeModel superclass to define specific models. T
 
 I have implemented some standard models, such as Model A, Model B and Model H of critical dynamics [1] and the Active Ising Model [4]. From these example classes it should be quite clear how to define your own model. 
 
+<h2 style="color:#E57373;">Why finite differences is delicate and we need to use a semi implicit scheme</h2>
 
-### Why finite differences is delicate and we need to use a semi implicit scheme
 To understand why these kind of equations are stiff and hard to integrate, let's consider the same equation in Fourier space.
 
 $$ 
@@ -64,7 +64,8 @@ $$
 
 Using this implicit explicit scheme the stiff term $\Gamma k^2$ is know in the denominator solving the problematics that we had with the explicit integration. 
 
-### De - aliasing 
+<h2 style="color:#E57373;">De-aliasing</h2>
+
 We work in with the Fourier transformed field $\hat \varphi(k,t)$, so that we can integrate the Laplacian term using a semi-implicit scheme. In this representation, non-linear terms such as $\varphi^3(x,t)$  are computed as convolutions,
 
 $$
@@ -96,7 +97,8 @@ In general, every time we compute a non-linear term of order $m$, we have to set
 
 In the code we do this by applying a mask to the fields before applying the inverse Fourier Transform to go back to the reals space domain. 
 
-## References
+<h2 style="color:#E57373;">References</h2>
+
 1. Hohenberg, P. C., & Halperin, B. I. (1977). Theory of dynamic critical phenomena. Reviews of Modern Physics, 49(3), 435.
 2. Fornberg, B. (1998). A practical guide to pseudospectral methods. Cambridge university press.
 
