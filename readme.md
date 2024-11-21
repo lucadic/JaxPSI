@@ -53,7 +53,7 @@ $$
 $$
 Crucially now the $k^2$ term is computed at the next time step, leading to the following update equation. 
 $$
-\hat \varphi(k, t +\Delta t) = \frac{ \hat \varphi(k,t) - r \hat \varphi(k,t) \Delta t \ + \mathcal F [ \varphi^3(x)](k,t) \Delta t \ + \sqrt{2  T \tilde \Gamma \Delta t} \ \eta(k,t)}{1 - \Gamma k^2 \Delta t}
+\hat \varphi(k, t +\Delta t) = \frac{ \hat \varphi(k,t) - r \hat \varphi(k,t) \Delta t \ + \mathcal F (\varphi^3(x))(k,t) \Delta t \ + \sqrt{2  T \tilde \Gamma \Delta t} \ \eta(k,t)}{1 - \Gamma k^2 \Delta t}
 $$
 
 Using this implicit explicit scheme the stiff term $\Gamma k^2$ is know in the denominator solving the problematics that we had with the explicit integration. 
@@ -65,7 +65,7 @@ $$
 $$ 
 which are computationally expensive. To avoid this, we compute the non linear terms in real space: 
 $$
- \mathcal F ( \varphi^3(x,t))= \mathcal F[ \mathcal F^{-1}(\hat \varphi]^3 )
+ \mathcal F ( \varphi^3(x,t))= \mathcal F( \mathcal F^{-1}(\hat \varphi)^3 )
 $$
 
 
