@@ -91,7 +91,7 @@ $$
 
 However, this approach introduces aliasing issues in discrete systems with periodic domains where $q = q + 2\pi / \Delta x $.  
 
-For non-linear terms of order $m$, modes with  $|k| > \pi / (m \Delta x) $ must be filtered. This process, known as **de-aliasing**, is implemented in the code using masks applied before the inverse Fourier Transform.  
+For non-linear terms of order $`m`$, modes with  $`|k| > \pi / (m \Delta x) `$ must be filtered. This process, known as **de-aliasing**, is implemented in the code using masks applied before the inverse Fourier Transform.  
 
 ---
 
